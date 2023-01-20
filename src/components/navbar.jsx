@@ -7,7 +7,7 @@ import {
   Button,
   Tooltip,
   IconButton,
-  Avatar,
+  CircularProgress,
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import { useEffect, useState } from "react";
@@ -38,10 +38,6 @@ const Navbar = () => {
     setAchorElUser(null);
   };
 
-  const logout = () => {
-    logOut();
-  };
-
   useEffect(() => {}, [user]);
 
   return (
@@ -50,59 +46,7 @@ const Navbar = () => {
         <></>
       ) : (
         <>
-          {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div
-                className="collapse navbar-collapse"
-                id="navbarSupportedContent"
-              >
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <Link to="/" className="nav-link">
-                      Home
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link to="/about" className="nav-link">
-                      About
-                    </Link>
-                  </li>
-                </ul>
-
-                <ul className="navbar-nav mb-2 mb-lg-0 d-flex">
-                  <li className="nav-item">
-                    <span className="nav-link">
-                      {user.user}
-                      &nbsp; &nbsp;
-                    </span>
-                  </li>
-
-                  <li className="nav-item">
-                    <button
-                      className="nav-link btn btn-outline-danger"
-                      onClick={() => logout()}
-                    >
-                      Salir
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav> */}
-
-          <AppBar position="static" style={{background: '#121212'}}>
+          <AppBar position="static" style={{ background: "#121212" }}>
             <Container maxWidth="xl">
               <Toolbar>
                 <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -154,13 +98,21 @@ const Navbar = () => {
                   >
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">
-                        <Link to="/"className="a" style={{ color: '#000'}}>Notes</Link>
+                        <Link to="/" className="a" style={{ color: "#000" }}>
+                          Notes
+                        </Link>
                       </Typography>
                     </MenuItem>
 
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">
-                        <Link to="/about"  style={{ color: '#000'}}className="a">About</Link>
+                        <Link
+                          to="/about"
+                          style={{ color: "#000" }}
+                          className="a"
+                        >
+                          About
+                        </Link>
                       </Typography>
                     </MenuItem>
                   </Menu>
@@ -186,7 +138,6 @@ const Navbar = () => {
                   </Link>
                 </Typography>
 
-                
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                   <Button
                     onClick={handleCloseNavMenu}
@@ -209,8 +160,8 @@ const Navbar = () => {
 
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}> 
-                      <PersonIcon style={{color: '#fff', fontSize: '2rem'}} />
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <PersonIcon style={{ color: "#fff", fontSize: "2rem" }} />
                     </IconButton>
                   </Tooltip>
                   <Menu

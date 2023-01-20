@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChecking, onLogin, onLogout } from '../store';
+import { onChecking, onLogin, onLogout } from '../store/auth/authSlice';
 import api from '../api/api';
 
 export const useAuthStore = () => {

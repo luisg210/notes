@@ -29,8 +29,10 @@ export const noteSlice = createSlice({
             payload.data.ok 
                 ? state.successMsg = payload.data.msg 
                 : state.errorMsg = payload.data.msg;
+                console.log(payload);
         },
         onGetById: ( state, { payload } ) => {
+            
             state.note = payload.note;
         }
     }

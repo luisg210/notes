@@ -3,42 +3,32 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import Navbar from "../components/navbar";
 import { Home } from "../components/home";
 import Login from "../components/Login";
-import Other from '../components/other';
+import Other from "../components/other";
 import { useEffect } from "react";
+import { Container } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 export const AppRouter = () => {
   const { status, checkAuthToken } = useAuthStore();
 
-  useEffect(() => { 
+  useEffect(() => {
     checkAuthToken();
-    console.log("in use effect");
     console.log(status);
   }, []);
 
-  // if (status === 'checking') {
-  //   return (
-  //     <>
-  //       <div
-  //         className="spinner-border"
-  //         style={{ width: "3rem", height: "3rem" }}
-  //         role="status"
-  //       >
-  //         <span className="visually-hidden">Loading...</span>
-  //       </div>
-  //       <div
-  //         className="spinner-grow"
-  //         style={{ width: "3rem", height: "3rem" }}
-  //         role="status"
-  //       >
-  //         <span className="visually-hidden">Loading...</span>
-  //       </div>
-  //     </>
-  //   )
-  // }
+  if (status === "checking") {
+    return (
+      <>
+        <Container>
+          <CircularProgress />
+        </Container>
+      </>
+    );
+  }
 
   return (
     <Routes>
-      { status === "not-authenticated" ? (
+      {status === "not-authenticated" ? (
         <Route path="/" element={<Navbar />}>
           <Route index element={<Login />} />
           <Route path="/*" element={<Navigate to="/" />} />

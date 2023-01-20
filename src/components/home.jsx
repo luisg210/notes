@@ -5,38 +5,27 @@ import {
   CardContent,
   Container,
   Grid,
-  Modal,
-  TextareaAutosize,
-  TextField,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useNoteStore } from "../hooks/useNoteStore";
+import { onIsUpdate, onOpenModal } from "../store/uiSlice";
+import { Form } from "./form";
 import { showSuccessAlert, showErrorAlert, showQuestionalert } from "./shared";
 
 export const Home = () => {
   //importaciones del hooks de useNoteStore
   const {
     notes,
-    getAll,
+    getAll: findAll,
     deleteNote: deleteNo,
     errorMsg,
     successMsg,
-    save,
-    getById,
-    note: noteById,
-    update: updateNote,
+    getById
   } = useNoteStore();
-  //Valor inicial a note
-  const [note, setNote] = useState({
-    title: "",
-    txt: "",
-  });
-  //Para hacer validaciones si se está actualizando
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //Al cargar el componente se cargan todas las notas
@@ -51,36 +40,13 @@ export const Home = () => {
       showErrorAlert(errorMsg);
     }
 
-    //Para setear los datos a los inputs
-    if (isUpdate) {
-      setNoteToModal();
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorMsg, successMsg, noteById]);
+  }, [errorMsg, successMsg]);
 
-  const update = (id) => {
-    getById({ id });
-    setIsUpdate(true);
-  };
-
-  const setNoteToModal = () => {
-    if (noteById.title !== undefined) {
-      note.title = noteById.title;
-      note.txt = noteById.txt;
-    }
-
-    handleOpen();
-  };
-
-  const cleanModal = () => {
-    setNote({
-      title: "",
-      txt: "",
-    });
-
-    setIsUpdate(false);
-    handleClose();
+  const update = async (id) => {
+    await getById({ id });
+    dispatch(onIsUpdate(true));
+    dispatch(onOpenModal());
   };
 
   const deleteNote = (id) => {
@@ -103,170 +69,81 @@ export const Home = () => {
     getAll();
   };
 
-  const handler = (value, input) => {
-    setNote({
-      ...note,
-      [input]: value,
-    });
+  const getAll = async () => {
+    await findAll();
+  }
+
+  const newNote = () => {
+    dispatch(onOpenModal())
   };
-
-  const saveNote = (e) => {
-    e.preventDefault();
-
-    if (isUpdate) {
-      updateNote({ note: note, id: noteById._id });
-    } else {
-      save({ note: note });
-    }
-
-    setIsUpdate(false);
-    getAll();
-  };
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <>
       <Container className="">
-        <h1>Notes</h1>
+        <h1 style={{ margin: "12px" }}>Notes</h1>
 
         <Button
           type="button"
           variant="contained"
           color="success"
           style={{ margin: "12px" }}
-          onClick={handleOpen}
+          onClick={newNote}
         >
           New note
         </Button>
 
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="self-start"
-        >
-          {notes.map((n, i) => {
-            return (
-              <Grid width="100%" item sx={12} md={4} padding={1}>
-                <Card className="card" variant="elevation">
-                  <CardContent key={i} className="card-content">
-                    <Typography
-                      variant="h5"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      {n.title}
-                    </Typography>
-
-                    <Typography sx={{ fontSize: 14 }} variant="h6">
-                      {n.txt}
-                    </Typography>
-                  </CardContent>
-
-                  <CardActions>
-                    <Grid item>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        onClick={() => update(n._id)}
-                      >
-                        Update
-                      </Button>
-                    </Grid>
-
-                    <Grid item>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        onClick={() => deleteNote(n._id)}
-                        color="error"
-                      >
-                        Delete
-                      </Button>
-                    </Grid>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
-
-        <Modal
-          component="form"
-          open={open}
-          onClose={handleClose}
-          onSubmit={() => saveNote()}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "white",
-              border: "1px solid rgba(12, 12, .2, 1)",
-              boxShadow: 24,
-              p: 2,
-            }}
+          <Grid
+            container
+            direction="row"
+            alignItems="self-start"
           >
-            <Grid
-              direction="column"
-              justifyContent="space-between"
-              alignItems="center"
-              container
-            >
-              <Grid item>
-                <Typography variant="h6">
-                  {!isUpdate ? "New note" : "Update note"}
-                </Typography>
-              </Grid>
+            {notes.map((n, i) => {
+              return (
+                <Grid key={i} width="100%" item sx={12} md={4} padding={1}>
+                  <Card className="card" variant="elevation">
+                    <CardContent  className="card-content">
+                      <Typography
+                        variant="h5"
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {n.title}
+                      </Typography>
 
-              <Grid item
-                  xs={12}
-                  width={350}
-                  marginBottom={2}
-                  marginTop={4}>
-                <TextField
-                  type="text"
-                  name="title"
-                  label="Title"
-                  value={note.title}
-                  onChange={(e) => handler(e.target.value, "title")}
-                  required
-                  fullWidth
-                />
-              </Grid>
+                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                        {n.txt}
+                      </Typography>
+                    </CardContent>
 
-              <Grid item
-                  xs={12}
-                  marginBottom={2}
-                  marginTop={2}
-                  width={350}
-                  height={120}>
-                <TextField
-                  type="text"
-                  name="txt"
-                  label="Type here..."
-                  value={note.txt}
-                  onChange={(e) => handler(e.target.value, "txt")}
-                  required
-                  fullWidth
-                  multiline
-                ></TextField>
-              </Grid>
+                    <CardActions>
+                      <Grid item>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          onClick={() => update(n._id)}
+                        >
+                          Update
+                        </Button>
+                      </Grid>
 
-              <Grid item marginBottom={1} marginTop={1} xs={12}>
-                <Button style={{marginRight: 5}} type="button" variant="outlined" color='error' onClick={() => cleanModal()}>
-                  Close
-                </Button>
-                <Button variant="contained" color='success' type="submit">{!isUpdate ? "Save" : "Update"}</Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Modal>
+                      <Grid item>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          onClick={() => deleteNote(n._id)}
+                          color="error"
+                        >
+                          Delete
+                        </Button>
+                      </Grid>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
+
+          <Form />
       </Container>
     </>
   );
