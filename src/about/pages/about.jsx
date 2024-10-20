@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 
 
-const Other = () => {    
+export const About = () => {    
 
   return ( 
     <Container>
@@ -20,5 +20,3 @@ const Other = () => {
     </Container>
   );
 };
-
-export default Other;

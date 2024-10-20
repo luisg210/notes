@@ -12,12 +12,12 @@ import {
 import { Box, Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../../hooks";
 import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 
-const Navbar = () => {
+export const Navbar = () => {
   const { status, logOut, user } = useAuthStore();
   const [anchorElNav, setAchorElnav] = useState(null);
   const [anchorElUser, setAchorElUser] = useState(null);
@@ -201,5 +201,3 @@ const Navbar = () => {
     </>
   );
 };
-
-export default Navbar;

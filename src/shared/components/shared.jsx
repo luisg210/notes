@@ -1,6 +1,6 @@
 import Swal from "sweetalert2"
 
-const showErrorAlert = msg => {
+export const showErrorAlert = msg => {
     Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -10,7 +10,7 @@ const showErrorAlert = msg => {
     });
 }
 
-const showSuccessAlert = msg => {
+export const showSuccessAlert = msg => {
     Swal.fire({
         icon: 'success',
         title: 'Success',
@@ -20,7 +20,7 @@ const showSuccessAlert = msg => {
     });
 }
 
-const showQuestionalert = msg => {
+export const showQuestionalert = msg => {
     return Swal.fire({
         icon: 'question',
         title: 'Question',
@@ -30,10 +30,4 @@ const showQuestionalert = msg => {
         showCancelButton: true,
         confirmButtonText: 'Yes'
     });
-}
-
-export {
-    showErrorAlert,
-    showSuccessAlert,
-    showQuestionalert
 }

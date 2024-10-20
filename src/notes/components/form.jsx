@@ -2,8 +2,8 @@ import { Button, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNoteStore } from "../hooks/useNoteStore";
-import { onCloseModal, onIsUpdate } from "../store/uiSlice";
+import { useNoteStore } from "../../hooks";
+import { onCloseModal, onIsUpdate } from "../../store";
 
 export const Form = () => {
   const { isUpdate, isModalOpen } = useSelector((state) => state.ui);

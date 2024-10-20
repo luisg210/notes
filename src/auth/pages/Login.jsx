@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../hooks/useAuthStore";
-import { useForm } from "../hooks/useForm";
+import { useAuthStore, useForm } from "../../hooks";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Button, CircularProgress } from "@mui/material";
@@ -18,7 +17,7 @@ const newField = {
   newRepeatPassword: "",
 };
 
-const Login = () => {
+export const Login = () => {
   const [isLogin, setIslogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const { startLogin, errorMsg, startRegister } = useAuthStore();
@@ -255,5 +254,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;

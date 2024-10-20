@@ -13,7 +13,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useNoteStore } from "../hooks/useNoteStore";
-import { showSuccessAlert, showErrorAlert, showQuestionalert } from "./shared";
+import { showSuccessAlert, showErrorAlert, showQuestionalert } from "../components/shared";
 
 export const Home = () => {
   //importaciones del hooks de useNoteStore

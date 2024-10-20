@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "../hooks/useAuthStore";
-import Navbar from "../components/navbar";
-import { Home } from "../components/home";
-import Login from "../components/Login";
-import Other from "../components/other";
+import { Home } from "../notes";
+import { Login } from "../auth";
+import { Navbar } from "../shared"; 
+import { About } from '../about/';
 import { useEffect } from "react";
 import { Container } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -36,7 +36,7 @@ export const AppRouter = () => {
       ) : (
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
-          <Route path="/about" element={<Other />} />
+          <Route path="/about" element={<About />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Route>
       )}

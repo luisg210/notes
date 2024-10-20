@@ -10,10 +10,10 @@ import {
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { useNoteStore } from "../hooks/useNoteStore";
-import { onIsUpdate, onOpenModal } from "../store/uiSlice";
-import { Form } from "./form";
-import { showSuccessAlert, showErrorAlert, showQuestionalert } from "./shared";
+import { useNoteStore } from "../../hooks";
+import { onIsUpdate, onOpenModal } from "../../store";
+import { Form } from "../components/form";
+import { showSuccessAlert, showErrorAlert, showQuestionalert } from "../../shared";
 
 export const Home = () => {
   //importaciones del hooks de useNoteStore
