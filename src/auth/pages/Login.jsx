@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore, useForm } from "../../hooks";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Button, CircularProgress } from "@mui/material";
-import {Container} from "@mui/material";
+import { Button, CircularProgress, Container } from "@mui/material";
 
 const loginField = {
   loginUser: "",
@@ -63,7 +62,7 @@ export const Login = () => {
   return (
     <>
       {loading ? (
-        <Container style={{paddingTop: '2rem'}}>
+        <Container style={{ paddingTop: "2rem" }}>
           <CircularProgress />
         </Container>
       ) : (
