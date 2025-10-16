@@ -9,13 +9,11 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(config => {
-    const traceId = generateTraceId();
-    config.headers['X-Trace-Id'] = traceId;
 
     const token = localStorage.getItem('token');
     if (token) {
-        config.withCredentials = true;
         config.headers['Authorization'] = `Bearer ${token}`;
+        config.withCredentials = true;
     }
 
     return config;
