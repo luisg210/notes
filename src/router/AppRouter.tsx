@@ -1,45 +1,53 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore } from "../hooks/useAuthStore";
-import { Home } from "../notes";
-import { Login } from "../auth";
-import { Navbar } from "../shared";
-import { About } from "../about";
-import { useEffect } from "react";
-import { Container } from "@mui/material";
-import { CircularProgress } from "@mui/material";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense } from 'react';
+import { useAuthStore } from '@/hooks';
+import { Loading } from '@/shared';
+import { AuthGuard } from './AuthGuard';
+import { NotesView } from '@/features/notes';
+import { LoginView } from '@/features/auth';
+import { About } from '@/pages';
+import { UserRegister, UserView } from '@/features/user';
+import MainLayout from '@/layouts/MainLayout';
 
 export const AppRouter = () => {
-  const { status, checkAuthToken } = useAuthStore();
-
-  useEffect(() => {
-    checkAuthToken();
-    console.log(status);
-  }, []);
-
-  if (status === "checking") {
-    return (
-      <>
-        <Container>
-          <CircularProgress />
-        </Container>
-      </>
-    );
-  }
+  const { isAuthenticated } = useAuthStore();
 
   return (
-    <Routes>
-      {status === "not-authenticated" ? (
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<Login />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </Route>
-      ) : (
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </Route>
-      )}
-    </Routes>
+    <Suspense fallback={<Loading />}>
+      <Routes>
+        {/* Publics routes */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <AuthGuard>
+                <NotesView />
+              </AuthGuard>
+            ) : (
+              <LoginView />
+            )
+          }
+        />
+        {/* Conditional register route */}
+        {!isAuthenticated && <Route path="/register" element={<UserRegister />} />}
+        {/* Private Route */}
+        <Route
+          path="/about"
+          element={
+            isAuthenticated ? (
+              <MainLayout>
+                <About />
+              </MainLayout>
+            ) : (
+              <About />
+            )
+          }
+        />
+        {/* Private Route */}
+        <Route path="/user" element={<UserView />} />
+        {/* Default route */}
+        <Route path="/*" element={<Navigate to="/" />} />
+      </Routes>
+    </Suspense>
   );
 };

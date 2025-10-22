@@ -1,8 +1,4 @@
-
-export const getEnvVariables = () => {
-    import.meta.env.BACKEND_URL;
-
-    return {
-        ...import.meta.env.BACKEND_URL
-    }
+export const getEnvVariable = () => {
+    const vars = import.meta.env.VITE_BACKEND_URL as string;
+    return vars;
 } 
