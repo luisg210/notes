@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginForm } from '../hooks/useLoginForm';
 
 export const LoginForm = () => {
-  const { register, onSubmit, errors, loading } = useLoginForm();
+  const { register, onSubmit, errors, loading, isSubmitting } = useLoginForm();
   const navigate = useNavigate();
 
   return (
@@ -48,14 +48,15 @@ export const LoginForm = () => {
             type="submit"
             size="medium"
             variant="outlined"
-            disabled={loading}
+            disabled={isSubmitting}
           >
-            {loading ? <CircularProgress size={24} /> : 'Iniciar sesion'}
+            {isSubmitting ? <CircularProgress size={24} /> : 'Iniciar sesion'}
           </Button>
         </Grid>
 
-        <Grid marginTop={2}>
+        <Grid marginTop={2} display="flex" justifyContent="space-between">
           <Link onClick={() => navigate('/register')}>No tengo cuenta</Link>
+          <Link onClick={() => navigate('/about')}>About</Link>
         </Grid>
       </Box>
     </Box>

@@ -7,7 +7,7 @@ import { loginThunk } from '../authThunks';
 export const useLoginForm = () => {
     const dispatch = useAppDispatch();
     const { loading, error } = useAppSelector(state => state.auth)
-    const { handleSubmit, register, formState: { errors } } = useForm<AuthFormData>({
+    const { handleSubmit, register, formState: { errors, isSubmitting } } = useForm<AuthFormData>({
         resolver: zodResolver(authSchema),
     });
 
@@ -19,6 +19,7 @@ export const useLoginForm = () => {
         register,
         onSubmit,
         errors,
+        isSubmitting,
 
         loading,
         error

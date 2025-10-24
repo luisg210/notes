@@ -39,7 +39,7 @@ const authSlice = createSlice({
                 state.error = null;
             })
             .addCase(renewTokenThunk.fulfilled, (state, action) => {
-                state.user = action.payload?.data;
+                state.user = action.payload?.data ?? null;
                 state.loading = false;
                 state.sessionChecked = true;
             })

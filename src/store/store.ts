@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from '@/features/auth/authSlice';
 import noteSlice from '@/features/notes/noteSlice';
+import userSlice from '@/features/user/userSlice';
 
 export const store = configureStore({
     reducer: {
         auth: authSlice,
         note: noteSlice,
-        //user: userSlice,
-        //ui: uiSlice
+        user: userSlice,
     }, devTools: import.meta.env.DEV,
 });
 
