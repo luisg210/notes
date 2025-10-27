@@ -79,7 +79,7 @@ export const useDeleteWithPassword = ({ showSnackbar }: Props) => {
       <Box sx={{ backgroundColor: ['var(--card)'] }}>
         <DialogTitle>¿Eliminar Usuario?</DialogTitle>
         <DialogContent sx={{ color: ['var(--text-muted)'] }}>
-          Esta acción no se puede deshacer.
+          Esta acción no se puede deshacer. Perderas todas tus notas.
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenConfirm(false)}>Cancelar</Button>
