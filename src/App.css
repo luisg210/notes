@@ -24,6 +24,19 @@
   background-color: var(--card);
 }
 
+.user-details-box {
+  max-width: 450px;
+  min-width: 450px;
+  margin: auto;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  gap: 2;
+  box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.5);
+  border-radius: 5px;
+  background-color: var(--card);
+}
+
 .btn {
   color: var(--text) !important;
   border-color: var(--accent) !important;

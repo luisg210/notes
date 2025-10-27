@@ -15,5 +15,9 @@ export const formatDate = (isoString: Date): string => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
 
+    if (Number.isNaN(date.getDate())) {
+        return '---';
+    }
+
     return `${day}/${month}/${year}`;
 };

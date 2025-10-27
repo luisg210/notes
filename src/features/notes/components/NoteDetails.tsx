@@ -5,8 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  TextField,
   Typography,
 } from '@mui/material';
 import { NoteResponseDTO } from '@/types';

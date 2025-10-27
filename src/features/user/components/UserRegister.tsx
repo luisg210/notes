@@ -12,15 +12,20 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useRegisterForm } from '../hooks/useRegisterForm';
 import { useAppSnackbar } from '@/shared';
+import { useAppDispatch } from '@/store';
+import { clearState } from '../userSlice';
 
 export const UserRegister = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { SnackbarComponent, showSnackbar } = useAppSnackbar();
   const { error, onSubmit, register, errors, isSubmitting } = useRegisterForm();
 
   useEffect(() => {
     if (error) {
       showSnackbar(error, 'error');
+
+      dispatch(clearState());
     }
   }, [error]);
 

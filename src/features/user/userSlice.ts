@@ -25,8 +25,8 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchFindUserById.fulfilled, (state, action) => {
-                state.user = action.payload.data;
                 state.loading = false;
+                state.user = action.payload;
             })
             .addCase(fetchFindUserById.rejected, (state, action) => {
                 state.error = action.error as string;
@@ -51,7 +51,7 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(updateUserThunk.rejected, (state, action) => {
-                state.error = action.error as string;
+                state.error = action.payload as string;
                 state.loading = false;
             })
             //ChangePassword
@@ -62,7 +62,7 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(changeUserPasswordThunk.rejected, (state, action) => {
-                state.error = action.error as string;
+                state.error = action.payload as string;
                 state.loading = false;
             })
             //Delete
@@ -73,7 +73,7 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(deleteUserThunk.rejected, (state, action) => {
-                state.error = action.error as string;
+                state.error = action.payload as string;
                 state.loading = false;
             })
     },

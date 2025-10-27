@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { changeUserPassword, createUser, deleteUser, findUserById, updateUser } from "./api";
-import { UserChangePasswordDTO, UserCreateDTO, UserUpdateDTO } from "@/types";
+import { UserChangePasswordDTO, UserCreateDTO, UserDeleteDTO, UserUpdateDTO } from "@/types";
+import { RootState } from "@/store";
 
 export const fetchFindUserById = createAsyncThunk(
     'user/findById',
     async (id: string, thunkAPI) => {
         try {
             const response = await findUserById(id);
-
-            return response;
+            return response.data;
 
         } catch (error: any) {
             const fallbackMessage = error.response?.data?.message || 'Error inesperado';
@@ -39,45 +39,57 @@ export const createUserThunk = createAsyncThunk(
 
 export const updateUserThunk = createAsyncThunk(
     'user/updateUser',
-    async (formData: UserUpdateDTO, thunkAPI) => {
+    async (formData: UserUpdateDTO, { getState, rejectWithValue }) => {
         try {
-            const response = await updateUser(formData);
+            const payload = {
+                ...formData,
+                id: (getState() as RootState).user.user?.id || ''
+            }
+            const response = await updateUser(payload);
 
             return response;
 
         } catch (error: any) {
             const fallbackMessage = error.response?.data?.message || 'Error inesperado';
-            return thunkAPI.rejectWithValue(fallbackMessage);
+            return rejectWithValue(fallbackMessage);
         }
     }
 )
 
 export const changeUserPasswordThunk = createAsyncThunk(
     'user/changeUserPassword',
-    async (formData: UserChangePasswordDTO, thunkAPI) => {
+    async (formData: UserChangePasswordDTO, { getState, rejectWithValue }) => {
         try {
-            const response = await changeUserPassword(formData);
+            const payload = {
+                ...formData,
+                user: (getState() as RootState).user.user?.id || ''
+            }
+            const response = await changeUserPassword(payload);
 
             return response;
 
         } catch (error: any) {
             const fallbackMessage = error.response?.data?.message || 'Error inesperado';
-            return thunkAPI.rejectWithValue(fallbackMessage);
+            return rejectWithValue(fallbackMessage);
         }
     }
 )
 
 export const deleteUserThunk = createAsyncThunk(
     'user/deleteUser',
-    async (id: string, thunkAPI) => {
+    async (formData: UserDeleteDTO, { getState, rejectWithValue }) => {
         try {
-            const response = await deleteUser(id);
+            const payload: UserDeleteDTO = {
+                ...formData,
+                user: (getState() as RootState).user.user?.id || ''
+            }
+            const response = await deleteUser(payload);
 
-            return response;
+            return response.message;
 
         } catch (error: any) {
             const fallbackMessage = error.response?.data?.message || 'Error inesperado';
-            return thunkAPI.rejectWithValue(fallbackMessage);
+            return rejectWithValue(fallbackMessage);
         }
     }
 ) 

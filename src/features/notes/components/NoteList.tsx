@@ -13,13 +13,15 @@ type Props = {
 };
 
 export const NoteList = ({ loading, notes, onEdit, onViewDetails, onDelete }: Props) => {
+  const notesReversed = [...(notes ?? [])].reverse();
   if (loading) return <Loading />;
 
   return (
     <>
-      {notes == null && <ErrorMessage message="No se encontraron notas" />}
+      {!Array.isArray(notesReversed) ||
+        (notesReversed.length === 0 && <ErrorMessage message="No se encontraron notas" />)}
 
-      {notes && (
+      {Array.isArray(notesReversed) && notesReversed && (
         <Grow in timeout={1000}>
           <Grid
             container
@@ -29,7 +31,7 @@ export const NoteList = ({ loading, notes, onEdit, onViewDetails, onDelete }: Pr
             alignContent="center"
             marginTop={5}
           >
-            {notes.map(note => (
+            {notesReversed.map(note => (
               <NoteCard
                 key={note._id}
                 note={note}

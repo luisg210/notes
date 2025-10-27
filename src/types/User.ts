@@ -1,9 +1,8 @@
-import { WithId } from "./WithId";
-
 export interface UserResponseDTO {
     id: string;
     name: string;
     username: string;
+    user?: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -15,14 +14,20 @@ export interface UserCreateDTO {
 }
 
 export interface UserUpdateDTO {
-    id: string;
-    _id: string;
+    id?: string;
+    _id?: string;
     name: string;
-    username: string;
-    password: string;
+    user: string;
 };
 
 export interface UserChangePasswordDTO {
+    currentPassword: string;
+    newPassword: string;
+    user?: string;
+}
+
+export interface UserDeleteDTO {
+    user: string;
     password: string;
 }
 

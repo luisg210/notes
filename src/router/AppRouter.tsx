@@ -3,11 +3,11 @@ import { Suspense } from 'react';
 import { useAuthStore } from '@/hooks';
 import { Loading } from '@/shared';
 import { AuthGuard } from './AuthGuard';
-import { NotesView } from '@/features/notes';
 import { LoginView } from '@/features/auth';
 import { About } from '@/pages';
 import { UserRegister, UserView } from '@/features/user';
 import MainLayout from '@/layouts/MainLayout';
+import { NotesView } from '@/features/notes';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useAuthStore();
@@ -44,7 +44,14 @@ export const AppRouter = () => {
           }
         />
         {/* Private Route */}
-        <Route path="/user" element={<UserView />} />
+        <Route
+          path="/profile"
+          element={
+            <AuthGuard>
+              <UserView />
+            </AuthGuard>
+          }
+        />
         {/* Default route */}
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>

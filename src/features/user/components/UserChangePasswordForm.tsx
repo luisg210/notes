@@ -10,40 +10,35 @@ import {
 } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
-import { UserResponseDTO } from '@/types';
-import { useUserForm } from '../hooks/useUserForm';
-import { UpdateUserFormData, updateUserSchema } from '../validation';
+import { UserChangePasswordFormData, userChangePasswordSchema } from '../validation';
+import { useUserChangePasswordForm } from '../hooks/useChangePasswordForm';
 
 type Props = {
   open: boolean;
-  user: UserResponseDTO;
   showSnackbar: (msg: string, sev: any) => void;
   handleCloseForm: () => void;
   handleSuccess: () => void;
 };
 
-export const UserForm = ({ open, user, showSnackbar, handleCloseForm, handleSuccess }: Props) => {
+export const UserChangePasswordForm = ({
+  open,
+  showSnackbar,
+  handleCloseForm,
+  handleSuccess,
+}: Props) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<UpdateUserFormData>({
-    resolver: zodResolver(updateUserSchema),
-    defaultValues: user,
+  } = useForm<UserChangePasswordFormData>({
+    resolver: zodResolver(userChangePasswordSchema),
   });
-  const { onSubmit } = useUserForm({
+  const { onSubmit } = useUserChangePasswordForm({
     showSnackbar,
     reset,
     handleSuccess,
   });
-
-  useEffect(() => {
-    if (open && user) {
-      reset(user);
-    }
-  }, [user, open]);
 
   return (
     <Dialog open={open} onClose={handleCloseForm}>
@@ -52,17 +47,17 @@ export const UserForm = ({ open, user, showSnackbar, handleCloseForm, handleSucc
         sx={{ backgroundColor: ['var(--card)'] }}
         onSubmit={handleSubmit(data => onSubmit(data))}
       >
-        <DialogTitle>Actualizar usuario</DialogTitle>
+        <DialogTitle>Actualizar contraseña</DialogTitle>
 
         <DialogContent sx={{ color: ['var(--text-muted)'] }}>
           <FormControl fullWidth>
             <TextField
-              label="Nombre"
-              type="text"
+              label="Contraseña actual"
+              type="password"
               variant="filled"
-              {...register('name')}
-              error={!!errors.name}
-              helperText={errors.name?.message}
+              {...register('currentPassword')}
+              error={!!errors.currentPassword}
+              helperText={errors.currentPassword?.message}
               margin="normal"
               color="warning"
             />
@@ -70,12 +65,12 @@ export const UserForm = ({ open, user, showSnackbar, handleCloseForm, handleSucc
 
           <FormControl fullWidth>
             <TextField
-              label="Usuario"
-              type="text"
+              label="Nueva contraseña"
+              type="password"
               variant="filled"
-              {...register('user')}
-              error={!!errors.user}
-              helperText={errors.user?.message}
+              {...register('newPassword')}
+              error={!!errors.newPassword}
+              helperText={errors.newPassword?.message}
               margin="normal"
               color="warning"
             />

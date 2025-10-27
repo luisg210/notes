@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/service";
-import { ApiResponse, UserChangePasswordDTO, UserCreateDTO, UserResponseDTO, UserUpdateDTO } from "@/types";
+import { ApiResponse, UserChangePasswordDTO, UserCreateDTO, UserDeleteDTO, UserResponseDTO, UserUpdateDTO } from "@/types";
 
 const ENDPOINT = '/users';
 
@@ -12,13 +12,13 @@ export const createUser = async (data: UserCreateDTO): Promise<ApiResponse<UserR
 }
 
 export const updateUser = async (data: UserUpdateDTO): Promise<ApiResponse<UserResponseDTO>> => {
-    return (await axiosInstance.put(`${ENDPOINT}/${data._id}`, data)).data;
+    return (await axiosInstance.put(`${ENDPOINT}/${data.id}`, data)).data;
 }
 
 export const changeUserPassword = async (data: UserChangePasswordDTO): Promise<ApiResponse<UserResponseDTO>> => {
     return (await axiosInstance.patch(`${ENDPOINT}/change-password`, data)).data;
 }
 
-export const deleteUser = async (id: string): Promise<ApiResponse<UserResponseDTO>> => {
-    return (await axiosInstance.delete(`${ENDPOINT}/${id}`)).data;
+export const deleteUser = async (data: UserDeleteDTO): Promise<ApiResponse<UserResponseDTO>> => {
+    return (await axiosInstance.post(`${ENDPOINT}/${data.user}`, data)).data;
 }

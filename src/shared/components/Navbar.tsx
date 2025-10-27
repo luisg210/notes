@@ -33,7 +33,7 @@ export const Navbar = () => {
     navigate('/profile');
   };
 
-  const handleLogout = () => () => {
+  const handleLogout = () => {
     dispatch(logOut());
     handleMenuClose();
     navigate('/login');
@@ -70,7 +70,7 @@ export const Navbar = () => {
               <MenuItem disabled>{user.user}</MenuItem>
               <MenuItem onClick={goToProfile}>Perfil</MenuItem>
               <MenuItem onClick={() => navigate('/about')}>About</MenuItem>
-              <MenuItem onClick={handleLogout()}>Cerrar sesión</MenuItem>
+              <MenuItem onClick={() => handleLogout()}>Cerrar sesión</MenuItem>
             </Menu>
           </Box>
         )}

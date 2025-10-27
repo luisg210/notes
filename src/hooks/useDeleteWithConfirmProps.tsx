@@ -29,6 +29,7 @@ export const useDeleteWithConfirm = ({
   const confirmDelete = async () => {
     if (!targetId) return;
     const result = await dispatch(deleteThunk(targetId));
+
     if (result.type.includes('fulfilled')) {
       showSnackbar(`${entityName} eliminado correctamente`, 'success');
       onDeleted();

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginForm } from '../hooks/useLoginForm';
 
 export const LoginForm = () => {
-  const { register, onSubmit, errors, loading, isSubmitting } = useLoginForm();
+  const { register, onSubmit, errors, isSubmitting } = useLoginForm();
   const navigate = useNavigate();
 
   return (
